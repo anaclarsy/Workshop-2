@@ -15,7 +15,7 @@ const inscritos = [];
 function calcularValorInscricao(isEstudante) {
 
   if (isEstudante) {
-    return VALOR_BASE * (1 + DESCONTO_ESTUDANTE);
+    return VALOR_BASE * (1 - DESCONTO_ESTUDANTE);
   }
   return VALOR_BASE;
 }
@@ -53,6 +53,11 @@ form.addEventListener("submit", (event) => {
     mensagemEl.className = "mensagem erro";
     return;
   }
+  if(idade<16){
+    mensagemEl.textContent = "A idade mínima é 16 anos.";
+    mensagemEl.className = "mensagem erro";
+    return;
+}	
 
   const valor = calcularValorInscricao(estudante);
   inscritos.push({ nome, idade, estudante, valor });
