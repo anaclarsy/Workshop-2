@@ -15,7 +15,7 @@ const inscritos = [];
 function calcularValorInscricao(isEstudante) {
 
   if (isEstudante) {
-    return VALOR_BASE * (1 + DESCONTO_ESTUDANTE);
+    return VALOR_BASE * (1 - DESCONTO_ESTUDANTE);
   }
   return VALOR_BASE;
 }
