@@ -13,9 +13,8 @@ const listaInscritosEl = document.getElementById("lista-inscritos");
 const inscritos = [];
 
 function calcularValorInscricao(isEstudante) {
-
   if (isEstudante) {
-    return VALOR_BASE * (1 + DESCONTO_ESTUDANTE);
+    return VALOR_BASE * (1 - DESCONTO_ESTUDANTE);
   }
   return VALOR_BASE;
 }
@@ -27,8 +26,13 @@ function formatarMoeda(valor) {
   });
 }
 
+function calcularTotalArrecadado() {
+  return inscritos.reduce((soma, item) => soma + item.valor, 0);
+}
+
 function atualizarInterface() {
   totalInscritosEl.textContent = inscritos.length;
+  totalArrecadadoEl.textContent = formatarMoeda(calcularTotalArrecadado());
 
   listaInscritosEl.innerHTML = "";
   inscritos.forEach((item) => {
@@ -37,8 +41,6 @@ function atualizarInterface() {
     li.textContent = `${item.nome} (${item.idade} anos) — ${tagEstudante} — ${formatarMoeda(item.valor)}`;
     listaInscritosEl.appendChild(li);
   });
-
-
 }
 
 form.addEventListener("submit", (event) => {
@@ -54,6 +56,12 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
+  if (idade < 16) {
+    mensagemEl.textContent = "A idade mínima para inscrição é 16 anos.";
+    mensagemEl.className = "mensagem erro";
+    return;
+  }
+
   const valor = calcularValorInscricao(estudante);
   inscritos.push({ nome, idade, estudante, valor });
 
@@ -65,3 +73,5 @@ form.addEventListener("submit", (event) => {
   form.reset();
   nomeInput.focus();
 });
+
+atualizarInterface();
