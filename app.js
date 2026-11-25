@@ -11,11 +11,11 @@ const totalArrecadadoEl = document.getElementById("total-arrecadado");
 const listaInscritosEl = document.getElementById("lista-inscritos");
 
 const inscritos = [];
-
+var soma = 0;
 function calcularValorInscricao(isEstudante) {
 
   if (isEstudante) {
-    return VALOR_BASE * (1 + DESCONTO_ESTUDANTE);
+    return VALOR_BASE * (1 - DESCONTO_ESTUDANTE);
   }
   return VALOR_BASE;
 }
@@ -30,7 +30,9 @@ function formatarMoeda(valor) {
 function atualizarInterface() {
   totalInscritosEl.textContent = inscritos.length;
 
+  totalArrecadadoEl.innerHTML = formatarMoeda(soma);  	
   listaInscritosEl.innerHTML = "";
+ 
   inscritos.forEach((item) => {
     const li = document.createElement("li");
     const tagEstudante = item.estudante ? "Estudante" : "Padrão";
@@ -53,10 +55,15 @@ form.addEventListener("submit", (event) => {
     mensagemEl.className = "mensagem erro";
     return;
   }
+  if(idade<16){
+    mensagemEl.textContent = "A idade mínima é 16 anos.";
+    mensagemEl.className = "mensagem erro";
+    return;
+}	
 
   const valor = calcularValorInscricao(estudante);
   inscritos.push({ nome, idade, estudante, valor });
-
+  soma += valor;	
   atualizarInterface();
 
   mensagemEl.textContent = "Inscrição adicionada com sucesso!";
