@@ -15,7 +15,7 @@ const inscritos = [];
 function calcularValorInscricao(isEstudante) {
 
   if (isEstudante) {
-    return VALOR_BASE * (1 + DESCONTO_ESTUDANTE);
+    return VALOR_BASE * (1 - DESCONTO_ESTUDANTE);
   }
   return VALOR_BASE;
 }
@@ -50,6 +50,11 @@ form.addEventListener("submit", (event) => {
 
   if (!nome) {
     mensagemEl.textContent = "Informe o nome do participante.";
+    mensagemEl.className = "mensagem erro";
+    return;
+  }
+  if(idade<16){
+    mensagemEl.textContent = "A idade mínima para inscrição é 16 anos.";
     mensagemEl.className = "mensagem erro";
     return;
   }
