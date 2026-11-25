@@ -53,6 +53,11 @@ form.addEventListener("submit", (event) => {
     mensagemEl.className = "mensagem erro";
     return;
   }
+  if(idade<16){
+    mensagemEl.textContent = "A idade minima é so 16 anos";
+    mensagemEl.className = "mensagem erro";
+    return;
+  }
 
   const valor = calcularValorInscricao(estudante);
   inscritos.push({ nome, idade, estudante, valor });
