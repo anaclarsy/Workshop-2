@@ -1,5 +1,5 @@
 const VALOR_BASE = 100.0;
-const DESCONTO_ESTUDANTE = 0.20;
+const DESCONTO_ESTUDANTE = 0.2;
 
 const form = document.getElementById("inscricao-form");
 const nomeInput = document.getElementById("nome");
@@ -13,7 +13,6 @@ const listaInscritosEl = document.getElementById("lista-inscritos");
 const inscritos = [];
 
 function calcularValorInscricao(isEstudante) {
-
   if (isEstudante) {
     return VALOR_BASE * (1 + DESCONTO_ESTUDANTE);
   }
@@ -37,8 +36,6 @@ function atualizarInterface() {
     li.textContent = `${item.nome} (${item.idade} anos) — ${tagEstudante} — ${formatarMoeda(item.valor)}`;
     listaInscritosEl.appendChild(li);
   });
-
-
 }
 
 form.addEventListener("submit", (event) => {
@@ -50,6 +47,12 @@ form.addEventListener("submit", (event) => {
 
   if (!nome) {
     mensagemEl.textContent = "Informe o nome do participante.";
+    mensagemEl.className = "mensagem erro";
+    return;
+  }
+
+  if (idade < 16) {
+    mensagemEl.textContent = "A idade mínima é de 16 anos.";
     mensagemEl.className = "mensagem erro";
     return;
   }
